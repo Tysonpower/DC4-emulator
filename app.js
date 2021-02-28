@@ -120,7 +120,13 @@ function filestree(json) {
 }
 
 // update stats on UI
-function updateStats(jsnStats) {
+function updateStats() {
+    let jsnStats = {fw: '1.1.0-beta', hw: '2021.01',
+                    cpu: Math.floor(Math.random() * (20 - 5 +1)) + 5,
+                    heap: 41123, minheap: 24504, psram: 1141862, max: 128000000, used: 16000000,
+                    snr: -5, rssi: -81, crc: 2, header: 5, received: 234062, volt: '14.0'};
+
+
     document.getElementById('stats_fw').innerText = jsnStats.fw;
     document.getElementById('stats_hw').innerText = jsnStats.hw;
 
@@ -146,6 +152,8 @@ function updateStats(jsnStats) {
     document.getElementById('stats_lnbir').innerText = (jsnStats.ldo&0x01)>0?'YES':'NO';
     document.getElementById('stats_lnbcon').innerText = (jsnStats.ldo&0x02)>0?'YES':'NO';
     document.getElementById('stats_lnbv').innerText = jsnStats.volt;
+
+    setTimeout(function(){ updateStats(); }, 1000);
 }
 
 // save Reeiver Settings
@@ -286,6 +294,9 @@ document.addEventListener('DOMContentLoaded', event => {
 
     document.getElementById('info_ip').innerText = myip;
     document.getElementById('info_ip').setAttribute('href', 'http://' + myip);
+
+    updateStats();
+    /*
     try {        
         document.getElementById('rcv_freq').value = init_freq;
         document.getElementById('rcv_bw').value = init_bw;
@@ -293,11 +304,13 @@ document.addEventListener('DOMContentLoaded', event => {
         document.getElementById('rcv_cr').value = init_cr;
     } catch (error) {}
 
+    
     let webSocket = new WebSocket('ws://' + window.location.host + '/ws');
     webSocket.onopen = function (event) {
+        */
         document.getElementById('con_status').classList = 'tag is-light is-success';
         document.getElementById('con_status').innerText = 'Connected';
-        webSocket.send("get stats");
+        /*webSocket.send("get stats");
     };
 
     webSocket.onmessage = function (event) {
@@ -308,7 +321,7 @@ document.addEventListener('DOMContentLoaded', event => {
     webSocket.onerror = function (event) { 
         document.getElementById('con_status').classList = 'tag is-light is-danger';
         document.getElementById('con_status').innerText = 'Connection Error';
-    };
+    };*/
 });
 
 // BZ2 Library Minified
