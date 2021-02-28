@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script type="text/javascript" src="bz2.min.js"></script>
+    <title>tbz2 Test</title>
+</head>
+<body>
+    <h2>This is a short tbz2 decompression Test</h2>
+    <p>Click the Button to decompress a 144kb test file into the 411kb Wikipedia Article downloaded over Satellite by the DC4. Library size: 12KB</p>
+    <button onclick="getTbz2()">Get the damn tbz2!</button>
+    <div id="data">Waiting for tbz2 Data....press the Button to start</div>
+</body>
+</html>
+
+
+<script>
+async function getTbz2(){
+    let fileBuffer;
+    fetch('ee1b-wikipedia-Ajla_Tomljanović.html.tbz2')
+        .then(response => response.arrayBuffer())
+        .then(data => {
+            console.time();
+            let arr = window.bz2.decompress(new Uint8Array(data));
+            // remove file metadata - first 1024 bytes
+            arr = arr.slice(1024, arr.length);
+            console.log(arr);
+            const result = new TextDecoder('utf8').decode(arr);
+            console.timeEnd();
+            document.getElementById('data').innerHTML = result;
+        });
+}
+</script>
