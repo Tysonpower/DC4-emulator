@@ -1,5 +1,5 @@
 
-let myip = '192.168.0.25';
+let myip = '192.168.4.1';
 
 let files_tree_json = [ {"path":"", "dir":1,"name":"Example Files", "size":"0"},
                         {"path":"/files/textFile.txt", "dir":0,"name":"textFile.txt", "size":"123"},
@@ -257,8 +257,11 @@ async function getText(filepath) {
 
 // get File and open it in the Viewer
 async function viewFile(filepath, fileExt) {
-    let result = 'File not Supported / Error while reading';
     document.getElementById('md_fileview_status').classList.add('loader');
+    let result = 'File not Supported / Error while reading';
+
+    let iframeElement = document.getElementById('data');
+    iframeElement.src = "about:blank";
 
     if (fileExt == 'tbz2') {
         console.log('tbz2 File');
@@ -268,9 +271,6 @@ async function viewFile(filepath, fileExt) {
         console.log('Text File');
         result = await getText(filepath);
     }
-
-    let iframeElement = document.getElementById('data');
-    iframeElement.src = "about:blank";
 
     // Set the iframe's new HTML
     iframeElement.contentWindow.document.open();
@@ -293,7 +293,7 @@ document.addEventListener('DOMContentLoaded', event => {
         document.getElementById('rcv_cr').value = init_cr;
     } catch (error) {}
 
-    let webSocket = new WebSocket('ws://' + myip + '/ws');
+    let webSocket = new WebSocket('ws://' + window.location.host + '/ws');
     webSocket.onopen = function (event) {
         document.getElementById('con_status').classList = 'tag is-light is-success';
         document.getElementById('con_status').innerText = 'Connected';
@@ -302,7 +302,6 @@ document.addEventListener('DOMContentLoaded', event => {
 
     webSocket.onmessage = function (event) {
         updateStats(JSON.parse(event.data));
-        console.log(event.data);
         setTimeout(function(){ webSocket.send("get stats"); }, 1000);
     };
 

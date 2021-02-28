@@ -206,7 +206,7 @@
             <div class="modal-content is-fullwidth">
                 <div class="box">
                     <h3 class="subtitle">File Viewer<span id="md_fileview_status" class="is-pulled-right"></span></h3>
-                    <iframe id="data">No data Yet...</iframe>                    
+                        <iframe id="data">No data Yet...</iframe>                    
                     <div class="field is-grouped pt-4">
                         <div class="control">
                             <button onclick="toggleModal('md_fileview')" class="button is-dark">Close</button>
@@ -236,7 +236,7 @@
                             <h3 class="subtitle has-text-grey has-text-weight-semibold">Device Information</h3>
                             <p>Hardware Version: <span id="stats_hw" class="is-pulled-right">-</span></p>
                             <p>Firmware Version: <span id="stats_fw" class="is-pulled-right">-</span></p>
-                            <p>IP Address: <a id="info_ip" class="is-pulled-right">-</a></p>
+                            <p>IP Address: <span id="info_ip" class="is-pulled-right">-</span></p>
                         </div>
                     </div>
                     <div class="column is-3">
@@ -312,6 +312,7 @@
                 <div class="container">
                     <div class="buttons">
                         <button onclick="formatSd()" id="btn_formatsd" class="button is-danger">Format SD Card</button>
+                        <span id="md_filetree_status" class="is-pulled-right"></span>
                     </div>                    
                     <div id="filestree" class="columns is-multiline"></div>
                 </div>
